@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f8c8d4">
+  <meta name="description" content="A little journey through a day, a letter, and a whole lot of love.">
+  <title>A Journey of Love ❤️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Inter:wght@300;400;500;600;700&family=Great+Vibes&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    body { margin:0; font-family:Inter,sans-serif; min-height:100svh; }
+    button { touch-action: manipulation; }
+    .font-cursive { font-family:'Dancing Script',cursive; }
+    .font-romantic { font-family:'Great Vibes',cursive; }
+    .font-serif-title { font-family:'Playfair Display',serif; }
+    #bg-canvas { position:fixed; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+    #app-container { isolation:isolate; }
+    .glass-card { background:rgba(255,255,255,.76); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,.55); }
+    .glass-card-dark { background:rgba(20,20,35,.84); backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,.12); }
+    .custom-scroll { scrollbar-width:thin; scrollbar-color:rgba(244,114,182,.6) transparent; }
+    .custom-scroll::-webkit-scrollbar { width:5px; }
+    .custom-scroll::-webkit-scrollbar-thumb { background:rgba(244,114,182,.6); border-radius:10px; }
+    .screen { transition:opacity .45s ease, transform .45s ease; }
+    .screen.hidden { display:none !important; }
+    .screen.entering { opacity:0; transform:translateY(10px); }
+    .screen.visible { opacity:1; transform:translateY(0); }
+    @keyframes vinylSpin { to { transform:rotate(360deg); } }
+    .spinning-vinyl { animation:vinylSpin 4s linear infinite; }
+    @keyframes floatSlow { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    .floating { animation:floatSlow 3s ease-in-out infinite; }
+    .chat-bubble-left { background:#fff; border-radius:18px 18px 18px 4px; box-shadow:0 2px 5px #0000000d; }
+    .chat-bubble-right { background:#dcf8c6; border-radius:18px 18px 4px 18px; box-shadow:0 2px 5px #0000000d; }
+    .time-badge { font-size:.65rem; opacity:.7; }
+    .gramophone-arm { transform-origin:90% 10%; transition:transform .6s ease; }
+    .gramophone-arm.playing { transform:rotate(22deg); }
+    .soft-shadow { box-shadow:0 18px 60px #7c2d4b22; }
+    @media (prefers-reduced-motion: reduce) {
+      *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; transition-duration:.01ms !important; }
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-800 min-h-screen overflow-x-hidden relative">
+  <canvas id="bg-canvas" aria-hidden="true"></canvas>
+  <main id="app-container" class="relative z-10 w-full min-h-screen flex flex-col items-center justify-center p-4 transition-all duration-1000 bg-gradient-to-br from-amber-100 via-rose-200 to-pink-300">
+    <!-- 1. Welcome -->
+    <section id="step-1" class="screen visible w-full max-w-md glass-card rounded-3xl p-7 sm:p-8 text-center soft-shadow flex flex-col items-center justify-between min-h-[470px]">
+      <div class="mt-5">
+        <div class="inline-flex p-4 bg-rose-100 text-rose-500 rounded-full mb-6 floating shadow-md" aria-hidden="true"><i class="fa-solid fa-heart text-4xl"></i></div>
+        <p class="text-xs tracking-[.2em] uppercase text-rose-600 font-semibold mb-3">A little something for you</p>
+        <h1 class="text-3xl font-serif-title font-bold text-slate-800 mb-4 leading-snug">Hey, my special someone ✨</h1>
+        <p class="text-lg text-slate-700 font-medium leading-relaxed px-1">“Babe, I love you. You are my today and all my tomorrows… can we go on a little journey?”</p>
+      </div>
+      <button onclick="goToStep(2)" class="w-full py-4 px-6 bg-gradient-to-r from-rose-500 to-pink-500 hover:from-rose-600 hover:to-pink-600 text-white font-semibold text-lg rounded-2xl shadow-lg transition active:scale-[.98] flex items-center justify-center gap-3 mt-8">
+        <span>Let’s go</span><i class="fa-solid fa-sparkles"></i>✨
+      </button>
+    </section>
+
+    <!-- 2. Original synthesized melody: no copyrighted song recording -->
+    <section id="step-2" class="screen hidden entering w-full max-w-md glass-card rounded-3xl p-7 sm:p-8 text-center soft-shadow flex-col items-center justify-between min-h-[500px]">
+      <div>
+        <span class="px-4 py-1.5 bg-rose-200/70 text-rose-800 rounded-full text-xs font-semibold tracking-wide uppercase">Step 1 · Set the mood 🎶</span>
+        <h2 class="text-2xl font-bold text-slate-800 mt-4 mb-2">A little melody</h2>
+        <p class="text-slate-600 text-sm mb-5">Tap the record to play a gentle, original piano-like melody. Make sure your phone isn’t on silent.</p>
+      </div>
+      <button id="gramophone-container" type="button" aria-label="Play or pause the melody" aria-pressed="false" class="relative my-4 cursor-pointer p-6 rounded-3xl bg-amber-50/70 border border-amber-200/70 shadow-inner flex flex-col items-center justify-center w-64 h-64 active:scale-[.98] transition-transform">
+        <div id="vinyl" class="relative w-40 h-40 rounded-full bg-slate-900 border-4 border-slate-700 shadow-xl flex items-center justify-center">
+          <div class="absolute inset-2 border border-slate-700 rounded-full"></div><div class="absolute inset-4 border border-slate-700 rounded-full"></div><div class="absolute inset-6 border border-slate-700 rounded-full"></div><div class="absolute inset-8 border border-slate-700 rounded-full"></div>
+          <div class="w-14 h-14 bg-rose-500 rounded-full border-2 border-white flex items-center justify-center text-white shadow-md"><i class="fa-solid fa-music"></i></div>
+        </div>
+        <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 200 200" aria-hidden="true">
+          <path d="M40 160 L70 160 L75 145 L35 145 Z" fill="#8B4513"/>
+          <path id="gramophone-arm" class="gramophone-arm" d="M160 50 L140 110 L115 100" fill="none" stroke="#D4AF37" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="160" cy="50" r="6" fill="#B8860B"/>
+        </svg>
+        <span id="gramophone-status-badge" class="absolute -bottom-3 bg-rose-500 text-white text-xs font-medium px-4 py-1.5 rounded-full shadow-md"><i class="fa-solid fa-play mr-1"></i> Tap to play</span>
+      </button>
+      <div id="music-indicator" class="min-h-8 flex items-center justify-center gap-1 opacity-0 transition-opacity" aria-live="polite">
+        <span class="w-1 bg-rose-500 h-3 rounded-full animate-pulse"></span><span class="w-1 bg-rose-500 h-6 rounded-full animate-pulse"></span><span class="w-1 bg-rose-500 h-4 rounded-full animate-pulse"></span><span class="w-1 bg-rose-500 h-7 rounded-full animate-pulse"></span>
+        <span class="text-xs text-rose-600 font-semibold ml-2">A melody just for this little journey</span>
+      </div>
+      <button id="btn-to-chat" onclick="goToStep(3)" class="w-full py-4 px-6 bg-gradient-to-r from-rose-500 to-pink-500 text-white font-semibold rounded-2xl shadow-lg transition mt-3">Continue journey ✨</button>
+      <button onclick="goToStep(3)" class="text-xs text-slate-500 underline mt-3">Skip music</button>
+    </section>
+
+    <!-- 3. Chat timeline -->
+    <section id="step-3" class="screen hidden entering w-full max-w-md glass-card rounded-3xl p-3 sm:p-4 soft-shadow flex-col h-[min(680px,88svh)] min-h-[490px]">
+      <header id="chat-header" class="w-full py-3 px-3 bg-white/85 rounded-2xl shadow-sm flex items-center justify-between border border-white/60 mb-3 shrink-0">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="relative shrink-0"><div class="w-10 h-10 rounded-full bg-rose-400 flex items-center justify-center text-white text-lg">❤️</div><span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-white rounded-full"></span></div>
+          <div class="min-w-0"><h3 class="font-bold text-slate-800 text-sm">My forever favourite 💕</h3><p class="text-xs text-slate-500 flex items-center gap-1"><i id="time-icon" class="fa-solid fa-sun text-amber-500"></i><span id="time-text">Morning · 09:00 AM</span></p></div>
+        </div>
+        <span id="phase-badge" class="px-3 py-1 bg-amber-100 text-amber-800 text-xs font-semibold rounded-full shrink-0">Morning</span>
+      </header>
+      <div id="chat-messages" class="flex-1 min-h-0 overflow-y-auto custom-scroll space-y-3 px-1 py-2" aria-live="polite"></div>
+      <div id="interactive-area" class="mt-2 pt-2 border-t border-slate-200/60 shrink-0"></div>
+    </section>
+
+    <!-- 4. Letter -->
+    <section id="step-4" class="screen hidden entering w-full max-w-xl glass-card-dark rounded-3xl p-6 sm:p-8 text-center soft-shadow my-4 text-slate-100">
+      <div class="mb-4">
+        <span class="inline-block p-3 bg-rose-500/20 text-rose-300 rounded-full mb-2"><i class="fa-solid fa-envelope-open-text text-2xl"></i></span>
+        <h2 class="text-4xl font-romantic text-rose-300 mb-2">A letter from my heart</h2>
+        <div class="w-16 h-0.5 bg-rose-500/50 mx-auto rounded-full"></div>
+      </div>
+      <div class="w-full max-h-[55svh] overflow-y-auto custom-scroll px-4 py-4 my-2 text-left bg-slate-900/60 rounded-2xl border border-white/5 text-slate-200 leading-relaxed font-serif-title text-sm sm:text-base tracking-wide">
+        <p class="whitespace-pre-line text-center text-rose-100">If someone asks me what you are to me,
+I'll struggle to find the words, you'll see.
+For how do I explain a feeling so true,
+When every little thought leads back to you?
+
+You're the quiet comfort my heart has known,
+The sweetest feeling of finding a home.
+The wish I make when the stars shine bright,
+The thought that stays with me every night.
+
+I want to see you chase the dreams you hold,
+Watch you find happiness as the years unfold.
+To celebrate your victories, big and small,
+And remind you you're capable of it all.
+
+I don't need a life where everything's new,
+Just ordinary moments, somehow shared with you.
+A thousand little memories, a lifetime to grow,
+And all the beautiful places we might someday know.
+
+For the world is vast, with its endless skies,
+A million wonders before our eyes.
+Yet among all the things this universe can do,
+My favourite part will always be you.
+
+So when three little words don't feel enough,
+I'll find new ways to express this love.
+You're my favourite hello, my gentlest goodnight,
+My little piece of peace, my stars in the night.
+
+And if I had a thousand lifetimes to get through,
+I'd spend them all finding new ways to choose you. ❤️🦋</p>
+      </div>
+      <p class="text-sm text-rose-100/80 mt-3">No matter where life takes us, I’ll always be cheering for your happiness and your dreams. ❤️</p>
+      <button onclick="openSpotifyPlaylist()" class="w-full mt-5 py-4 px-5 bg-gradient-to-r from-emerald-500 to-green-600 hover:from-emerald-600 hover:to-green-700 text-white font-bold text-base sm:text-lg rounded-2xl shadow-xl transition active:scale-[.98] flex items-center justify-center gap-3">
+        <i class="fa-brands fa-spotify text-2xl"></i><span>One last little thing… 🎶</span>
+      </button>
+      <button onclick="restartJourney()" class="mt-4 text-sm text-rose-200 underline">Read it all again ↻</button>
+    </section>
+  </main>
+
+<script>
+  'use strict';
+  const SPOTIFY_PLAYLIST_URL = 'https://open.spotify.com/playlist/7vK450IRVPJVrmrcWEUg9q?si=q3mr6JDDThOcCYP77RDH2g&utm_source=copy-link&pi=b9q77OP7SQerN';
+  let currentStep = 1, isGramophonePlaying = false, audioCtx = null, melodyTimer = null, noteTimers = [];
+  let chatStage = 0, stageToken = 0;
+  const appContainer = document.getElementById('app-container');
+  const gradients = {
+    morning:'from-amber-100 via-rose-200 to-pink-200',
+    afternoon:'from-sky-200 via-blue-100 to-amber-100',
+    dusk:'from-indigo-300 via-rose-300 to-amber-200',
+    night:'from-slate-900 via-indigo-950 to-slate-950',
+    letter:'from-slate-950 via-purple-950 to-slate-900'
+  };
+  function setBackground(gradient) {
+    appContainer.className = `relative z-10 w-full min-h-screen flex flex-col items-center justify-center p-4 transition-all duration-1000 bg-gradient-to-br ${gradient}`;
+  }
+  function goToStep(step) {
+    const old = document.getElementById(`step-${currentStep}`);
+    const next = document.getElementById(`step-${step}`);
+    if (!old || !next || currentStep === step) return;
+    if (currentStep === 2 && step !== 2) stopMelody();
+    old.classList.remove('visible'); old.classList.add('entering');
+    window.setTimeout(() => {
+      old.classList.add('hidden');
+      next.classList.remove('hidden');
+      next.classList.add('entering');
+      void next.offsetWidth;
+      next.classList.remove('entering'); next.classList.add('visible');
+      currentStep = step;
+      if (step === 3) initChatJourney();
+      if (step === 4) { setBackground(gradients.letter); setBgMode('stars'); }
+      else if (step === 1 || step === 2) setBackground('from-amber-100 via-rose-200 to-pink-300');
+    }, 180);
+  }
+
+  // Original, synthesized notes. Audio starts only after a user gesture.
+  const chords = [[261.63,329.63,392.00],[246.94,293.66,369.99],[220.00,261.63,329.63],[174.61,220.00,261.63]];
+  function initAudio() {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) { alert('This browser does not support the little melody, but you can skip ahead.'); return false; }
+    if (!audioCtx) audioCtx = new AudioContextClass();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    return true;
+  }
+  function playTone(freq, duration=1.8, delay=0) {
+    if (!audioCtx || !isGramophonePlaying) return;
+    const timer = window.setTimeout(() => {
+      if (!isGramophonePlaying || !audioCtx) return;
+      try {
+        const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+        const now = audioCtx.currentTime;
+        osc.type = 'sine'; osc.frequency.setValueAtTime(freq, now);
+        gain.gain.setValueAtTime(0.0001, now);
+        gain.gain.exponentialRampToValueAtTime(0.09, now + 0.06);
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+        osc.connect(gain); gain.connect(audioCtx.destination);
+        osc.start(now); osc.stop(now + duration + .05);
+      } catch (error) { console.warn('Melody playback issue:', error); }
+    }, delay * 1000);
+    noteTimers.push(timer);
+  }
+  function startMelodyLoop() {
+    stopMelody(false);
+    let index = 0;
+    const playSequence = () => {
+      if (!isGramophonePlaying) return;
+      const chord = chords[index];
+      playTone(chord[0],2.0,0); playTone(chord[1],1.8,.35); playTone(chord[2],2.0,.7); playTone(chord[1]*2,2.1,1.05);
+      index = (index + 1) % chords.length;
+    };
+    playSequence(); melodyTimer = window.setInterval(playSequence, 2800);
+  }
+  function stopMelody(updateState=true) {
+    if (updateState) isGramophonePlaying = false;
+    if (melodyTimer) { clearInterval(melodyTimer); melodyTimer = null; }
+    noteTimers.forEach(clearTimeout); noteTimers = [];
+    const vinyl=document.getElementById('vinyl'), arm=document.getElementById('gramophone-arm');
+    const badge=document.getElementById('gramophone-status-badge'), indicator=document.getElementById('music-indicator'), record=document.getElementById('gramophone-container');
+    if (vinyl) vinyl.classList.remove('spinning-vinyl');
+    if (arm) arm.classList.remove('playing');
+    if (badge) { badge.innerHTML='<i class="fa-solid fa-play mr-1"></i> Tap to play'; badge.classList.replace('bg-emerald-500','bg-rose-500'); }
+    if (indicator) { indicator.classList.remove('opacity-100'); indicator.classList.add('opacity-0'); }
+    if (record) record.setAttribute('aria-pressed','false');
+  }
+  document.getElementById('gramophone-container').addEventListener('click', () => {
+    if (!isGramophonePlaying) {
+      if (!initAudio()) return;
+      isGramophonePlaying = true;
+      document.getElementById('vinyl').classList.add('spinning-vinyl');
+      document.getElementById('gramophone-arm').classList.add('playing');
+      const badge=document.getElementById('gramophone-status-badge');
+      badge.innerHTML='<i class="fa-solid fa-pause mr-1"></i> Playing melody'; badge.classList.replace('bg-rose-500','bg-emerald-500');
+      document.getElementById('music-indicator').classList.replace('opacity-0','opacity-100');
+      document.getElementById('gramophone-container').setAttribute('aria-pressed','true');
+      startMelodyLoop();
+    } else stopMelody();
+  });
+
+  function safeText(el, value) { el.textContent = value; }
+  function appendMessage(sender, text, time) {
+    const holder = document.getElementById('chat-messages'), isMe = sender === 'me';
+    const row = document.createElement('div');
+    row.className = `flex ${isMe ? 'justify-end' : 'justify-start'} my-1`;
+    const bubble = document.createElement('div');
+    bubble.className = `${isMe ? 'chat-bubble-right' : 'chat-bubble-left'} max-w-[84%] p-3 text-slate-800 text-sm font-medium`;
+    const p = document.createElement('p'); p.className='leading-relaxed whitespace-pre-line'; p.textContent=text;
+    const stamp=document.createElement('div'); stamp.className='text-right mt-1';
+    const timeEl=document.createElement('span'); timeEl.className='time-badge text-slate-500'; timeEl.textContent=time;
+    stamp.appendChild(timeEl); bubble.append(p,stamp); row.appendChild(bubble); holder.appendChild(row);
+    holder.scrollTop=holder.scrollHeight;
+  }
+  function setChatHeader(time, icon, badge, gradient) {
+    safeText(document.getElementById('time-text'),time);
+    document.getElementById('time-icon').className=icon;
+    safeText(document.getElementById('phase-badge'),badge);
+    setBackground(gradient);
+  }
+  function promptButton(label, action, className='') {
+    const button=document.createElement('button'); button.type='button'; button.className=`w-full py-3 px-4 text-white text-sm font-bold rounded-xl shadow-md transition active:scale-[.98] ${className}`; button.textContent=label; button.addEventListener('click',action); return button;
+  }
+  function showPrompt(title, question, options) {
+    const area=document.getElementById('interactive-area'); area.replaceChildren();
+    const card=document.createElement('div'); card.className='bg-white/95 p-3 rounded-2xl shadow-md border border-rose-100 text-center';
+    const h=document.createElement('p'); h.className='text-xs font-semibold text-rose-600 uppercase mb-2'; h.textContent=title;
+    const q=document.createElement('p'); q.className='text-sm text-slate-700 font-medium mb-3'; q.textContent=question;
+    const grid=document.createElement('div'); grid.className='grid grid-cols-1 sm:grid-cols-2 gap-2';
+    options.forEach(opt => { const b=document.createElement('button'); b.type='button'; b.className='py-2.5 px-3 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-xl text-xs font-semibold border border-rose-200 transition'; b.textContent=opt.label; b.addEventListener('click',opt.action); grid.appendChild(b); });
+    card.append(h,q,grid); area.appendChild(card);
+  }
+  function showNext(label, colour='from-rose-500 to-pink-500') {
+    const area=document.getElementById('interactive-area'); area.replaceChildren();
+    area.appendChild(promptButton(label,nextTimelineStage,`bg-gradient-to-r ${colour}`));
+  }
+  function initChatJourney() {
+    stageToken++; chatStage=0;
+    document.getElementById('chat-messages').replaceChildren();
+    renderStage();
+  }
+  function renderStage() {
+    const token=++stageToken, area=document.getElementById('interactive-area'); area.replaceChildren();
+    const later=(fn,ms)=>window.setTimeout(()=>{if(token===stageToken && currentStep===3) fn();},ms);
+    if (chatStage===0) {
+      setChatHeader('Morning · 09:00 AM','fa-solid fa-sun text-amber-500','Morning',gradients.morning);
+      later(()=>appendMessage('her','Hlo ❤️','09:00 AM'),200);
+      later(()=>{appendMessage('me','Hlo ❤️ Good morning, sunshine!','09:01 AM'); showPrompt('✨ A little morning question','Which memory feels most special to you?',[
+        {label:'Our late-night chats 🌙',action:()=>answerQuiz('Our late-night chats 🌙')},
+        {label:'The first time we connected ❤️',action:()=>answerQuiz('The first time we connected ❤️')}
+      ]);},650);
+    } else if (chatStage===1) {
+      setChatHeader('Afternoon · 02:30 PM','fa-solid fa-sun text-amber-400','Afternoon',gradients.afternoon);
+      appendMessage('me','Hey, future doctor! How is your NEET preparation going? 🩺📚','02:30 PM');
+      later(()=>{appendMessage('her','Going intense! Studying hard for NEET 📖✨','02:31 PM'); later(()=>{appendMessage('me','You know what? I have a little confession to make…','02:32 PM'); showPrompt('A secret confession 💖','Ready to hear it?',[{label:'Reveal the confession 🫣',action:confessCrush}]);},500);},350);
+    } else if (chatStage===2) {
+      setChatHeader('Dusk · 06:45 PM','fa-solid fa-cloud-sun text-rose-400','Dusk',gradients.dusk);
+      appendMessage('me','CONGRATULATIONS! 🎉🩺 You did it! I’m so proud of you.','06:45 PM');
+      later(()=>{appendMessage('her','Thank you so much!! ❤️🥹','06:46 PM'); later(()=>{appendMessage('me','I want to see you win, not just today, but throughout your life. ❤️','06:47 PM'); showLovePrompt();},550);},350);
+    } else if (chatStage===3) {
+      setChatHeader('Night · 11:11 PM','fa-solid fa-moon text-indigo-300','Starry night',gradients.night); setBgMode('stars');
+      appendMessage('her','The sky looks so peaceful tonight… ✨','11:10 PM');
+      later(()=>{appendMessage('me','Just like the calm you bring to my world. I wrote something for you under these stars. 🌙','11:11 PM'); const area=document.getElementById('interactive-area'); area.replaceChildren(); area.appendChild(promptButton('Open your letter 💌',()=>goToStep(4),'bg-gradient-to-r from-purple-600 to-pink-600'));},650);
+    }
+  }
+  function answerQuiz(answer) {
+    appendMessage('her',answer,'09:02 AM');
+    appendMessage('me','That memory means a lot to me too. You’re important to me. Ready to see where the day takes us? 💕','09:03 AM');
+    showNext('Fast-forward to afternoon →');
+  }
+  function confessCrush() {
+    appendMessage('me','Back in those NEET-prep days… you were my biggest crush. 🫣❤️','02:33 PM');
+    appendMessage('her','Aww, really? 🥹❤️','02:34 PM');
+    showNext('Transition to dusk 🌅','from-amber-500 to-rose-500');
+  }
+  function showLovePrompt() {
+    const area=document.getElementById('interactive-area'); area.replaceChildren();
+    const note=document.createElement('div'); note.className='p-3 bg-gradient-to-r from-rose-500 to-pink-600 rounded-2xl text-white text-center shadow-lg';
+    const p=document.createElement('p'); p.className='font-cursive text-3xl font-bold'; p.textContent='I love you ❤️'; note.appendChild(p); area.appendChild(note);
+    const b=promptButton('Wait for the starry night 🌙',nextTimelineStage,'bg-slate-800 mt-2'); b.classList.add('mt-2'); area.appendChild(b);
+  }
+  function nextTimelineStage() { if (chatStage<3) { chatStage++; renderStage(); } }
+  function openSpotifyPlaylist() { const win=window.open(SPOTIFY_PLAYLIST_URL,'_blank','noopener,noreferrer'); if (win) win.opener=null; }
+  function restartJourney() {
+    stopMelody(); currentStep=4;
+    document.getElementById('step-4').classList.remove('hidden','entering'); document.getElementById('step-4').classList.add('visible');
+    ['step-1','step-2','step-3'].forEach(id=>{const el=document.getElementById(id);el.classList.add('hidden');el.classList.remove('visible');});
+    setBackground(gradients.letter); setBgMode('stars');
+  }
+
+  // Lightweight animated hearts/stars, with a smaller count on mobile.
+  const canvas=document.getElementById('bg-canvas'), ctx=canvas.getContext('2d');
+  let particles=[], canvasMode='hearts', rafId=null;
+  function resizeCanvas() { const dpr=Math.min(window.devicePixelRatio||1,2); canvas.width=Math.floor(innerWidth*dpr); canvas.height=Math.floor(innerHeight*dpr); canvas.style.width=innerWidth+'px'; canvas.style.height=innerHeight+'px'; ctx.setTransform(dpr,0,0,dpr,0,0); initParticles(); }
+  class Particle {
+    constructor(type) { this.reset(type); }
+    reset(type) { this.type=type; this.x=Math.random()*innerWidth; this.y=type==='stars'?Math.random()*innerHeight:innerHeight+20; this.size=Math.random()*10+7; this.speedY=Math.random()*1.1+.35; this.opacity=Math.random()*.55+.2; this.twinkle=(Math.random()*.018+.006)*(Math.random()<.5?-1:1); }
+    update() { if(this.type==='hearts'){this.y-=this.speedY;this.x+=Math.sin(this.y*.02)*.35;if(this.y < -20){this.x=Math.random()*innerWidth;this.y=innerHeight+20;}} else {this.opacity+=this.twinkle;if(this.opacity>.9||this.opacity<.15)this.twinkle*=-1;} }
+    draw() { ctx.save();ctx.globalAlpha=this.opacity;if(this.type==='hearts'){ctx.font=`${this.size}px Arial`;ctx.fillText('♥',this.x,this.y);}else{ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(this.x,this.y,this.size/4,0,Math.PI*2);ctx.fill();}ctx.restore(); }
+  }
+  function initParticles() { if(!ctx)return; particles=[];const count=canvasMode==='hearts'?(innerWidth<600?13:25):(innerWidth<600?35:65);for(let i=0;i<count;i++)particles.push(new Particle(canvasMode)); }
+  function setBgMode(mode) { canvasMode=mode; initParticles(); }
+  function animateBg() { if(document.hidden){rafId=requestAnimationFrame(animateBg);return;}ctx.clearRect(0,0,innerWidth,innerHeight);particles.forEach(p=>{p.update();p.draw();});rafId=requestAnimationFrame(animateBg); }
+  window.addEventListener('resize',resizeCanvas,{passive:true});
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden && !rafId)animateBg();});
+  resizeCanvas(); animateBg();
+</script>
+</body>
+</html>
